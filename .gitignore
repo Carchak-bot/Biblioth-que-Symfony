@@ -7,6 +7,17 @@
 /public/bundles/
 /var/
 /vendor/
+/repository/
+/translations/
+/tests/
+/bin/
+/config/
+/public/
+/src/Entity/
+/src/repository/
+/src/base.html.twig
+/migrations/
+
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
