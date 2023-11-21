@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Livre{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Livre</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.Titre) }}
+    {{ form_row(form.Auteur) }}
+    {{ form_row(form.Description) }}
+    {{ form_row(form.Date_de_Paruption) }}
+    {{ form_row(form.Image) }}
+    {{ form_row(form.Pages_Nombres) }}
+    {{ form_row(form.Categorie) }}
+    {{ form_row(form.Statut) }}
+    {{ form_row(form.ISBN_Nombre) }}
+    {# {{ form_row(form.ID_Emprunteur) }} #}
+
+    <button type="submit">Ajouter</button>
+    {{ form_end(form) }}
+{% endblock %}

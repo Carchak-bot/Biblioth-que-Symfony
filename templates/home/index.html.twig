@@ -18,6 +18,7 @@
                 Date de Parution : {{ livre.DatedeParuption ? livre.DatedeParuption|date('d-m-Y') : 'Non spécifiée' }}<br>
                 Pages : {{ livre.PagesNombres }}<br>
                 Statut : {{ livre.Statut ? 'Emprunté' : 'Disponible' }}<br>
+                categorie : {{ livre.categorie }}<br>
                 ISBN : {{ livre.ISBNNombre }}<br>
                 {% if livre.idEmprunteur is not null %}
                     Emprunteur : {{ livre.idEmprunteur.nom }}<br>

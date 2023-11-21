@@ -17,6 +17,7 @@
 /src/repository/
 /src/base.html.twig
 /migrations/
+/src/Controller/HomeController.php
 
 ###< symfony/framework-bundle ###
 
