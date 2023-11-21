@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MembresController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper container p-3">
+    <h1>Salutations {{ controller_name }}! ✅</h1>
+    <br>
+    <h2>Veuillez vérifier ces paramètres avant créer une entrée dans la BDD :</h2>
+    <ul>
+        <li>Aucunes cases ne soient vides de données.</li>
+        <li>Le fichier de Photo soit dans ces formats : 'jpg', 'png', 'jpeg', 'gif', 'webp'</li>
+    </ul>
+    <br><br>
+    <div class="row text-start">
+        <h3>Votre formulaire d'ajout de membres :</h3>
+        <form action="http://127.0.0.1:8000/membres/added" method="post" enctype="multipart/form-data">
+            <div class="col-6 ">
+                    <label for="Nom">Sélectionnez un Nom :</label>
+                    <input type="text" name="Nom" id="Nom" >
+            </div>
+            <br>
+            <div class="col-6 ">
+                    <label for="Prenom">Sélectionnez un Prenom :</label>
+                    <input type="text" name="Prenom" id="Prenom" >
+            </div>
+            <br>
+            <div class="col-6 ">
+                    <label for="Statut">Sélectionnez un Statut :</label>
+                    <input type="text" name="Statut" id="Statut" >
+            </div>
+            <br>
+            <div class="col-6 ">
+                    <label for="Photo">Sélectionnez une Photo :</label>
+                    <input type="file" name="Photo" id="Photo" >
+            </div>
+            <br><br><br>
+            <button submit>Créer un membre</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
