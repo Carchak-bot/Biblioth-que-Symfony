@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\MembresRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: MembresRepository::class)]
 class Membres
@@ -23,7 +25,12 @@ class Membres
     private ?string $Statut = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Photo = null;
+    private ?string $PhotoName = null;
+
+    private ?File $PhotoFile;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToOne(mappedBy: 'ID_Emprunteur', cascade: ['persist', 'remove'])]
     private ?Livre $livre = null;
@@ -69,16 +76,30 @@ class Membres
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhotoName(): ?string
     {
-        return $this->Photo;
+        return $this->PhotoName;
     }
 
-    public function setPhoto(string $Photo): static
+    public function setPhotoName(?string $Photo): static
     {
-        $this->Photo = $Photo;
+        $this->PhotoName = $Photo;
 
         return $this;
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->PhotoFile;
+    }
+
+    public function setPhotoFile(?File $PhotoFile = null): void
+    {
+        $this->PhotoFile = $PhotoFile;
+
+        if ($PhotoFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
     public function getLivre(): ?Livre
