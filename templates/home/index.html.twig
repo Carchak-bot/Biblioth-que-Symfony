@@ -3,24 +3,20 @@
 {% block title %}Bienvenue sur la Bibliothèque{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur la Bibliothèque</h1>
-    <ul>
+    <h1 class="mt-4 mb-4">Bienvenue sur la Bibliothèque</h1>
+    <div class="row row-cols-1 row-cols-md-3">
         {% for livre in livres %}
-            <li>
-                   {% if livre.ImageName is not null %}
-                    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
-                {% endif %}
-                <strong><a href="">{{ livre.titre }}</a></strong> - {{ livre.auteur }}<br>
-                {# {{ livre.description }}<br>
-                Date de Parution : {{ livre.DatedeParuption ? livre.DatedeParuption|date('d-m-Y') : 'Non spécifiée' }}<br>
-                Pages : {{ livre.PagesNombres }}<br>
-                Statut : {{ livre.Statut ? 'Emprunté' : 'Disponible' }}<br>
-                categorie : {{ livre.categorie }}<br>
-                ISBN : {{ livre.ISBNNombre }}<br>
-                {% if livre.idEmprunteur is not null %}
-                    Emprunteur : {{ livre.idEmprunteur.nom }}<br>
-                {% endif %} #}
-            </li>
+            <div class="col mb-4">
+                <div class="card">
+                    {% if livre.ImageName is not null %}
+                        <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" class="card-img-top" alt="{{ livre.titre }}" style="max-width: 100%; max-height: 100%;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{{ path('details_livre', {'id': livre.id}) }}">{{ livre.titre }}</a></h5>
+                        <p class="card-text">{{ livre.auteur }}</p>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

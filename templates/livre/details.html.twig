@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Livre{% endblock %}
+
+{% block body %}
+ {% if livre.ImageName is not null %}
+                    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
+                {% endif %}
+     <h1>{{ livre.titre }}</h1>
+    <p>Auteur : {{ livre.auteur }}</p>
+    <p>Description : {{ livre.description }}</p>
+    <p>Date de Parution : {{ livre.DatedeParuption ? livre.DatedeParuption|date('d-m-Y') : 'Non spécifiée' }}</p>
+    <p>Nombre de Pages : {{ livre.PagesNombres }}</p>
+    <p>Catégorie : {{ livre.categorie }}</p>
+    <p>Statut : {{ livre.Statut ? 'Emprunté' : 'Disponible' }}</p>
+    <p>ISBN : {{ livre.ISBNNombre }}</p>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Membre{% endblock %}
+
+{% block body %}
+    <h1>Détails du Membre</h1>
+    <ul>
+    <li>Photo : {% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">{% endif %}</li>
+        <li>Nom : {{ membre.Nom }}</li>
+        <li>Prénom : {{ membre.Prenom }}</li>
+        <li>Statut : {{ membre.Statut }}</li>       
+    </ul>
+{% endblock %}

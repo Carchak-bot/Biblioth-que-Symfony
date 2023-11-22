@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller; 
+// src/Controller/LivreController.php
+
+namespace App\Controller;
 
 use App\Form\LivreType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +46,7 @@ class LivreController extends AbstractController
 
     private function uploadImage(UploadedFile $imageFile): string
     {
-        $destination = $this->getParameter('kernel.project_dir') . '/public/img/PhotoUtilisateurs';
+        $destination = $this->getParameter('kernel.project_dir') . '/public/img/CouvertureLivres';
         $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
         $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
@@ -53,4 +55,3 @@ class LivreController extends AbstractController
         return $newFilename;
     }
 }
-    

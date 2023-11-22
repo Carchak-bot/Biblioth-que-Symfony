@@ -1,74 +1,83 @@
 <?php
 
+// src/Controller/MembresController.php
+
 namespace App\Controller;
 
+use App\Entity\Membres;
+use App\Form\MembreType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
-
-use App\Entity\Membres;
+use App\Repository\MembresRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MembresController extends AbstractController
 {
+
     #[Route('/membres', name: 'liste_membres')]
-    public function index(): Response
+    public function listeMembres(MembresRepository $membresRepository): Response
     {
-        $Membres = new Membres;
-        
+        $membres = $membresRepository->findAll();
+
         return $this->render('membres/index.html.twig', [
-            'controller_name' => 'Employé 427',
+            'membres' => $membres,
         ]);
     }
 
-    #[Route('/membres/add', name: 'ajout_membres')]
-    public function ajoutMembres(): Response
+    #[Route('/membres/add', name: 'ajouter_membres')]
+    public function ajouterMembresBdd(Request $request, ManagerRegistry $doctrine): Response
     {
-        return $this->render('membres/ajout.html.twig', [
-            'controller_name' => 'Employé 427',
-        ]);
-    }
+        $membre = new Membres();
+        $form = $this->createForm(MembreType::class, $membre);
 
-    #[Route('/membres/added', name: 'ajouter_membres')]
-    public function ajouterMembresBdd(ManagerRegistry $doctrine): Response
-    {
-        // $name = null;
-        //Traitement photo
-        if (isset($_FILES['Photo'])) {
-            $tmpName = $_FILES['Photo']['tmp_name'];
-            $name = $_FILES['Photo']['name'];
-            $size = $_FILES['Photo']['size'];
-            $error = $_FILES['Photo']['error'];
-        } 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Appeler setPhotoFile avec le fichier photo
+            $membre->setPhotoFile($form->get('PhotoFile')->getData());
         
-        $tabExtension = explode('.', $name);
-        $extension = strtolower(end($tabExtension));
+            // Assurez-vous que la propriété PhotoName est correctement définie
+            $membre->setPhotoName($form->get('PhotoFile')->getData()->getClientOriginalName());
+            
+            /** @var UploadedFile $PhotoFile */
+            $PhotoFile = $form['PhotoFile']->getData();
+
+            if ($PhotoFile) {
+                $newPhotoName = $this->uploadPhoto($PhotoFile);
+                $membre->setPhotoName($newPhotoName);
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($membre);
+            $entityManager->flush();
         
-        //Tableau des extensions que l'on accepte
-        $extensions = ['jpg', 'png', 'jpeg', 'gif', 'webp'];
-        
-        //Taille max que l'on accepte
-        $maxSize = 100000000;
-        
-        if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
-            move_uploaded_file($tmpName, '../../public/img/PhotoUtilisateurs/' . $name);
-        } else {
-            echo "Une erreur est survenue";
+            return $this->redirectToRoute('home_route');
         }
 
-
-        $entityManager = $doctrine->getManager();
-
-        $Membres = new Membres;
-        $Membres->setNom($_POST['Nom']);
-        $Membres->setPrenom($_POST['Prenom']);
-        $Membres->setStatut($_POST['Statut']);
-        $Membres->setPhoto($name);
-
-        $entityManager->persist($Membres);
-        $entityManager->flush();
-        return $this->render('membres/ajoutFait.html.twig', [
-            'controller_name' => 'Employé 427',
+        return $this->render('membres/ajout.html.twig', [
+            'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/membres/{id}', name: 'details_membre')]
+    public function detailsMembre(Membres $membre): Response
+    {
+        return $this->render('membres/details.html.twig', [
+            'membre' => $membre,
+        ]);
+    }
+
+    private function uploadPhoto(UploadedFile $PhotoFile): string
+    {
+        $destination = $this->getParameter('kernel.project_dir') . '/public/img/PhotoUtilisateurs';
+        $originalFilename = pathinfo($PhotoFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $newFilename = $originalFilename . '-' . uniqid() . '.' . $PhotoFile->guessExtension();
+
+        $PhotoFile->move($destination, $newFilename);
+
+        return $newFilename;
     }
 }

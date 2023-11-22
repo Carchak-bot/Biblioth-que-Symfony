@@ -24,7 +24,7 @@ class Membres
     #[ORM\Column(length: 255)]
     private ?string $Statut = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $PhotoName = null;
 
     private ?File $PhotoFile;
@@ -81,9 +81,9 @@ class Membres
         return $this->PhotoName;
     }
 
-    public function setPhotoName(?string $Photo): static
+    public function setPhotoName(?string $PhotoName): static
     {
-        $this->PhotoName = $Photo;
+        $this->PhotoName = $PhotoName;
 
         return $this;
     }

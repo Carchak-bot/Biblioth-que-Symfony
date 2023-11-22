@@ -1,11 +1,11 @@
 #entete {
     padding-bottom: 5%;
-    background-color: rgba(50, 50, 100, 0.800);
+    background-color: rgba(204, 187, 241, 1);
     color: white;
 }
 
 #piedpage {
     padding: 5%;
-    background-color: rgba(50, 50, 100, 0.800);
-    color: white;
+    background-color: rgba(204, 187, 241, 1);
+    color: rgb(0, 0, 0);
 }
