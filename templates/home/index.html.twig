@@ -7,8 +7,8 @@
     <ul>
         {% for livre in livres %}
             <li>
-                   {% if livre.Image is not null %}
-                    <img src="{{ livre.Image }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
+                   {% if livre.ImageName is not null %}
+                    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
                 {% endif %}
                 <strong>{{ livre.titre }}</strong> - {{ livre.auteur }}<br>
                 {{ livre.description }}<br>

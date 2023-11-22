@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\LivreRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
@@ -26,7 +28,12 @@ class Livre
     private ?int $Date_de_Paruption = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Image = null;
+    private ?string $ImageName = null;
+
+    private ?File $ImageFile;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Pages_Nombres = null;
@@ -96,16 +103,30 @@ class Livre
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImageName(): ?string
     {
-        return $this->Image;
+        return $this->ImageName;
     }
 
-    public function setImage(?string $Image): static
+    public function setImageName(?string $Image): static
     {
-        $this->Image = $Image;
+        $this->ImageName = $Image;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->ImageFile;
+    }
+
+    public function setImageFile(?File $ImageFile = null): void
+    {
+        $this->ImageFile = $ImageFile;
+
+        if ($ImageFile instanceof UploadedFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
     public function getPagesNombres(): ?string

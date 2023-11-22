@@ -27,7 +27,7 @@ class LivreType extends AbstractType
             ])
             ->add('Date_de_Paruption', IntegerType::class)
             
-            ->add('Image', FileType::class, [
+            ->add('ImageFile', FileType::class, [
                 'required' => false,
             ])
             ->add('Pages_Nombres', TextType::class, [

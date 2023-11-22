@@ -10,21 +10,17 @@
     {{ form_row(form.Auteur) }}
     {{ form_row(form.Description) }}
     {{ form_row(form.Date_de_Paruption) }}
-    {{ form_row(form.Image) }}
+    {{ form_row(form.ImageFile) }}
     {{ form_row(form.Pages_Nombres) }}
     {{ form_row(form.Categorie) }}
     {{ form_row(form.Statut) }}
     {{ form_row(form.ISBN_Nombre) }}
-    {# {{ form_row(form.ID_Emprunteur) }} #}
+
+    {# Ajout de la condition pour afficher l'image si elle existe #}
+    {% if form.vars.value.ImageName is not null %}
+        <img src="{{ asset('img/CouvertureLivres/' ~ form.vars.value.ImageName) }}" alt="Image du livre">
+    {% endif %}
 
     <button type="submit">Ajouter</button>
     {{ form_end(form) }}
 {% endblock %}
-
-
-    
-   
-   
-    
-
-

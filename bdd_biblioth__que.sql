@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 20 nov. 2023 à 16:46
+-- Généré le : mer. 22 nov. 2023 à 08:40
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -60,6 +60,18 @@ CREATE TABLE `livre` (
   `isbn_nombre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `livre`
+--
+
+INSERT INTO `livre` (`id`, `id_emprunteur_id`, `titre`, `auteur`, `description`, `date_de_paruption`, `image`, `pages_nombres`, `categorie`, `statut`, `isbn_nombre`) VALUES
+(1, NULL, 'The End and Death', 'Dan Abnett', 'Sanguinus get shreked by the Horus Heresy', 15000000, NULL, '42', 'roman', 0, 1525693546),
+(2, NULL, 'Lili au pays du test', 'Moi', 'Test', 25081998, NULL, '156', 'Categorie 2', 0, 2147483647),
+(3, NULL, 'Lili au pays du test', 'Moi', 'Test', 25081998, NULL, '156', 'Categorie 2', 0, 2147483647),
+(4, NULL, 'Lili au pays du test', 'Moi', 'Test', 25081998, NULL, '156', 'Categorie 2', 1, 2147483647),
+(5, NULL, 'Lili au pays du test', 'Moi', 'Test', 25081998, NULL, '156', 'Categorie 2', 1, 2147483647),
+(6, NULL, 'Lili au pays du test', 'Moi', 'Test', 25081998, NULL, '156', 'Categorie 2', 1, 2147483647);
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +85,17 @@ CREATE TABLE `membres` (
   `statut` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `membres`
+--
+
+INSERT INTO `membres` (`id`, `nom`, `prenom`, `statut`, `photo`) VALUES
+(1, 'Von Topkek', 'Topkekus', 'Chomeur', 'CharlesEdouard_18.png'),
+(2, 'Testeurons', 'Testorino', 'Testeur', 'KnightLandvar_31.png'),
+(3, 'Testeurus', 'Testor', 'Testeur', 'Blacksteel-Legion-final2.png'),
+(4, 'Testeur', 'Testorin', 'Testeur', 'Kroot_Chaos_IV_14.png'),
+(5, 'Testeurons', 'Testorino', 'Testeur', 'Kroot-Chaos_III_11.png');
 
 -- --------------------------------------------------------
 
@@ -130,13 +153,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT pour la table `livre`
 --
 ALTER TABLE `livre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `messenger_messages`
