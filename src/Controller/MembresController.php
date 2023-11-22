@@ -14,6 +14,8 @@ class MembresController extends AbstractController
     #[Route('/membres', name: 'liste_membres')]
     public function index(): Response
     {
+        $Membres = new Membres;
+        
         return $this->render('membres/index.html.twig', [
             'controller_name' => 'Employé 427',
         ]);
@@ -49,7 +51,7 @@ class MembresController extends AbstractController
         $maxSize = 100000000;
         
         if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
-            move_uploaded_file($tmpName, '../src/img/PhotoUtilisateurs/' . $name);
+            move_uploaded_file($tmpName, '../../public/img/PhotoUtilisateurs/' . $name);
         } else {
             echo "Une erreur est survenue";
         }
