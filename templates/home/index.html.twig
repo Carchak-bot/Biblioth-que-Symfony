@@ -10,8 +10,8 @@
                    {% if livre.ImageName is not null %}
                     <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
                 {% endif %}
-                <strong>{{ livre.titre }}</strong> - {{ livre.auteur }}<br>
-                {{ livre.description }}<br>
+                <strong><a href="">{{ livre.titre }}</a></strong> - {{ livre.auteur }}<br>
+                {# {{ livre.description }}<br>
                 Date de Parution : {{ livre.DatedeParuption ? livre.DatedeParuption|date('d-m-Y') : 'Non spécifiée' }}<br>
                 Pages : {{ livre.PagesNombres }}<br>
                 Statut : {{ livre.Statut ? 'Emprunté' : 'Disponible' }}<br>
@@ -19,7 +19,7 @@
                 ISBN : {{ livre.ISBNNombre }}<br>
                 {% if livre.idEmprunteur is not null %}
                     Emprunteur : {{ livre.idEmprunteur.nom }}<br>
-                {% endif %}
+                {% endif %} #}
             </li>
         {% endfor %}
     </ul>
