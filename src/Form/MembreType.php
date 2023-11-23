@@ -21,12 +21,9 @@ class MembreType extends AbstractType
             ->add('Statut', TextType::class)
             ->add('PhotoFile', FileType::class, [
                 'required' => false, // Allow empty file input
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Ajouter Membre',
             ]);
-    }
 
+    }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

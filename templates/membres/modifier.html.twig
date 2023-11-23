@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Membre{% endblock %}
+
+{% block body %}
+    <h1>Modifier le Membre</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.Nom) }}
+    {{ form_row(form.Prenom) }}
+    {{ form_row(form.Statut) }}
+
+    {% if membre.PhotoName is not null %}
+        <img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">
+    {% endif %}
+
+    {{ form_row(form.PhotoFile) }} 
+
+{% if membre.statut == 'emprunté' %}
+    {{ form_row(form.livre) }}
+{% endif %}
+    <button type="submit" class="btn btn-primary">Modifier le membre</button>
+  
+    {{ form_end(form) }}
+
+    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+{% endblock %}

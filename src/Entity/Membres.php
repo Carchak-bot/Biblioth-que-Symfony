@@ -6,34 +6,57 @@ use App\Repository\MembresRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: MembresRepository::class)]
+#[
+    ORM\Entity(repositoryClass: MembresRepository::class)
+]
 class Membres
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[
+        ORM\Id,
+        ORM\GeneratedValue,
+        ORM\Column(type: "integer")
+    ]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Statut = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[
+        ORM\Column(type: "string", length: 255, nullable: true)
+    ]
     private ?string $PhotoName = null;
 
     private ?File $PhotoFile;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[
+        ORM\Column(type: "datetime_immutable", nullable: true)
+    ]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'ID_Emprunteur', cascade: ['persist', 'remove'])]
-    private ?Livre $livre = null;
+    #[
+        ORM\OneToMany(mappedBy: "ID_Emprunteur", targetEntity: Livre::class, cascade: ["persist", "remove"])
+    ]
+    private Collection $livres;
+
+    public function __construct()
+    {
+        $this->livres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,7 +68,7 @@ class Membres
         return $this->Nom;
     }
 
-    public function setNom(string $Nom): static
+    public function setNom(string $Nom): self
     {
         $this->Nom = $Nom;
 
@@ -57,7 +80,7 @@ class Membres
         return $this->Prenom;
     }
 
-    public function setPrenom(string $Prenom): static
+    public function setPrenom(string $Prenom): self
     {
         $this->Prenom = $Prenom;
 
@@ -69,7 +92,7 @@ class Membres
         return $this->Statut;
     }
 
-    public function setStatut(string $Statut): static
+    public function setStatut(string $Statut): self
     {
         $this->Statut = $Statut;
 
@@ -81,7 +104,7 @@ class Membres
         return $this->PhotoName;
     }
 
-    public function setPhotoName(?string $PhotoName): static
+    public function setPhotoName(?string $PhotoName): self
     {
         $this->PhotoName = $PhotoName;
 
@@ -102,24 +125,32 @@ class Membres
         }
     }
 
-    public function getLivre(): ?Livre
+    /**
+     * @return Collection|Livre[]
+     */
+    public function getLivres(): Collection
     {
-        return $this->livre;
+        return $this->livres;
     }
 
-    public function setLivre(?Livre $livre): static
+    public function addLivre(Livre $livre): self
     {
-        // unset the owning side of the relation if necessary
-        if ($livre === null && $this->livre !== null) {
-            $this->livre->setIDEmprunteur(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($livre !== null && $livre->getIDEmprunteur() !== $this) {
+        if (!$this->livres->contains($livre)) {
+            $this->livres[] = $livre;
             $livre->setIDEmprunteur($this);
         }
 
-        $this->livre = $livre;
+        return $this;
+    }
+
+    public function removeLivre(Livre $livre): self
+    {
+        if ($this->livres->removeElement($livre)) {
+            // set the owning side to null (unless already changed)
+            if ($livre->getIDEmprunteur() === $this) {
+                $livre->setIDEmprunteur(null);
+            }
+        }
 
         return $this;
     }

@@ -10,4 +10,24 @@
         <li>Prénom : {{ membre.Prenom }}</li>
         <li>Statut : {{ membre.Statut }}</li>       
     </ul>
+
+    <h2>Livres empruntés</h2>
+    {% if livresEmpruntes is not empty %}
+        <ul>
+            {% for livre in livresEmpruntes %}
+                <li>{{ livre.titre }}</li>
+                {# Ajoutez d'autres informations du livre si nécessaire #}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ce membre n'a emprunté aucun livre pour le moment.</p>
+    {% endif %}
+
+    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
+    </form>
+
+    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+
+    <a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
 {% endblock %}

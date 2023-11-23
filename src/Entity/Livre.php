@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Entity;
 
@@ -7,47 +7,75 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-#[ORM\Entity(repositoryClass: LivreRepository::class)]
+#[
+    ORM\Entity(repositoryClass: LivreRepository::class)
+]
 class Livre
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[
+        ORM\Id,
+        ORM\GeneratedValue,
+        ORM\Column(type: "integer")
+    ]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Titre = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Auteur = null;
 
-    #[ORM\Column(length: 500, nullable: true)]
+    #[
+        ORM\Column(type: "string", length: 500, nullable: true)
+    ]
     private ?string $Description = null;
 
-    #[ORM\Column]
+    #[
+        ORM\Column(type: "integer")
+    ]
     private ?int $Date_de_Paruption = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[
+        ORM\Column(type: "string", length: 255, nullable: true)
+    ]
     private ?string $ImageName = null;
 
     private ?File $ImageFile;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[
+        ORM\Column(type: "datetime_immutable", nullable: true)
+    ]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[
+        ORM\Column(type: "string", length: 255, nullable: true)
+    ]
     private ?string $Pages_Nombres = null;
 
-    #[ORM\Column(length: 255)]
+    #[
+        ORM\Column(type: "string", length: 255)
+    ]
     private ?string $Categorie = null;
 
-    #[ORM\Column]
+    #[
+        ORM\Column(type: "boolean")
+    ]
     private ?bool $Statut = null;
 
-    #[ORM\Column]
+    #[
+        ORM\Column(type: "integer")
+    ]
     private ?int $ISBN_Nombre = null;
 
-    #[ORM\OneToOne(inversedBy: 'livre', cascade: ['persist', 'remove'])]
+
+    #[
+        ORM\ManyToOne(inversedBy: "livres", cascade: ["persist", "remove"])
+    ]
+
     private ?Membres $ID_Emprunteur = null;
 
     public function getId(): ?int
@@ -177,12 +205,13 @@ class Livre
         return $this;
     }
 
+  
     public function getIDEmprunteur(): ?Membres
     {
         return $this->ID_Emprunteur;
     }
 
-    public function setIDEmprunteur(?Membres $ID_Emprunteur): static
+    public function setIDEmprunteur(?Membres $ID_Emprunteur): self
     {
         $this->ID_Emprunteur = $ID_Emprunteur;
 

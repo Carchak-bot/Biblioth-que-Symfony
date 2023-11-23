@@ -1,26 +1,28 @@
 {% extends 'base.html.twig' %}
-{% block title %}Modifier les information du livre{% endblock %}
+
+{% block title %}Modifier les informations du livre{% endblock %}
 {% block body %}
-{{ form_start(form) }}
+    {{ form_start(form) }}
 
-{{ form_row(form.titre) }}
-{{ form_row(form.auteur) }}
-{{ form_row(form.description) }}
-{{ form_row(form.Date_de_Paruption) }}
+    {{ form_row(form.Titre) }}
+    {{ form_row(form.Auteur) }}
+    {{ form_row(form.Description) }}
+    {{ form_row(form.Date_de_Paruption) }}
 
+    {% if livre.ImageName is not null %}
+        <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.Titre }}" style="max-width: 100px; max-height: 100px;">
+    {% endif %}
 
-{% if livre.ImageName is not null %}
-    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
-{% endif %}
+    {{ form_row(form.ImageFile) }}
+    {{ form_row(form.Pages_Nombres) }}
+    {{ form_row(form.Categorie) }}
+    {{ form_row(form.Statut) }}
+    {{ form_row(form.ID_Emprunteur) }}
+    {{ form_row(form.ISBN_Nombre) }}
 
-{{ form_row(form.ImageFile) }}
-{{ form_row(form.PagesNombres) }}
-{{ form_row(form.categorie) }}
-{{ form_row(form.Statut) }}
-{{ form_row(form.ISBNNombre) }}
+    <a href="{{ path('details_livre', {'id': livre.id}) }}" class="btn btn-secondary">Retour aux détails</a>
+    <button type="submit" class="btn btn-primary">Modifier le livre</button>
 
-<a href="{{ path('details_livre', {'id': livre.id}) }}" class="btn btn-secondary">Retour aux détails</a>
-<button type="submit" class="btn btn-primary">Modifier le livre</button>
+    {{ form_end(form) }}
 
-{{ form_end(form) }}
 {% endblock %}

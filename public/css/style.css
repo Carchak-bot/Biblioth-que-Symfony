@@ -1,5 +1,8 @@
+body {
+    background-color: rgb(143, 124, 145);
+}
+
 #entete {
-    padding-bottom: 5%;
     background-color: rgba(204, 187, 241, 1);
     color: white;
 }
@@ -39,27 +42,49 @@
     left: 0;
 }
 
+.bg-custom
+{
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.alert-info {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgb(30, 25, 41);; /* Changer la couleur du texte */
+}
+
+.card:hover .overlay {
+    background-color: rgb(91, 73, 131);
+}
+
+.card:hover .card-title,
+.card:hover .card-text {
+    color: rgb(56, 44, 83); /* ou la couleur que vous préférez pour le texte */
+    transition: color 0.3s; /* Animation de transition pour le changement de couleur */
+
+}
+
 #piedpage {
-    padding: 5%;
+    padding: 1%;
     background-color: rgba(204, 187, 241, 1);
     color: rgb(0, 0, 0);
 }
 
-.bg-custom
-{
-    background-color: rgba(204, 187, 241, 1);
-}
 
-.bg-custom2 {
-    background-image: url('https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg'); /* Ajoutez le chemin vers votre image de fond */
-    /* background-size: cover; */
-    margin-left: 3%;
-    margin-right: 3%;
-}
-
-.bg-blur {
+img.background {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
     filter: blur(5px);
+    background-repeat: repeat-y;
 }
+
+.topkek {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
 .text-yellow {
     color: rgb(174, 138, 62);
 }

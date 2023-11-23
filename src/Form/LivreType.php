@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Livre;
+use App\Entity\Membres;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -35,21 +36,24 @@ class LivreType extends AbstractType
             ])
             ->add('Categorie', ChoiceType::class, [
                 'choices' => [
-                    'Categorie 1' => 'Categorie 1',
-                    'Categorie 2' => 'Categorie 2',
-                    'Categorie 3' => 'Categorie 3',
+                    'Fantastique' => 'Fantastique',
+                    'Poésie' => 'Poésie',
+                    'Bande Déssinée' => 'Bande Déssinée',
+                    'Chroniques' => 'Chroniques',
+                    'Littérature jeunesse' => 'Littérature jeunesse',
+                    'Science-fiction' => 'Science-fiction',
+                    'Nouvelles' => 'Nouvelles',
                 ],
             ])
             ->add('Statut', CheckboxType::class, [
                 'required' => false,
             ])
-            ->add('ISBN_Nombre', IntegerType::class);
-            // // // Ajoutez d'autres champs au besoin
-            // // ->add('ID_Emprunteur', EntityType::class, [
-            // //     'class' => Membres::class,
-            // //     'choice_label' => 'nom', // Ajustez cela en fonction de votre entité Membres
-            // //     'required' => false,
-            // ]);
+            ->add('ISBN_Nombre', IntegerType::class)
+            ->add('ID_Emprunteur', EntityType::class, [
+                'class' => Membres::class,
+                'choice_label' => 'Nom', // ou toute autre propriété que vous souhaitez afficher
+                'required' => false, // Permettre la sélection d'aucun membre
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

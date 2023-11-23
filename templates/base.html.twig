@@ -32,16 +32,24 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="{{ path('home_route') }}">Acceuil</a>
+								<a class="nav-link active" href="{{ path('home_route') }}">
+									<h4>Acceuil</h4>
+								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('livres_add') }}">Ajouter un Livre</a>
+								<a class="nav-link" href="{{ path('livres_add') }}">
+									<h4>Ajouter un Livre</h4>
+								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('liste_membres') }}">Liste Membres</a>
+								<a class="nav-link" href="{{ path('liste_membres') }}">
+									<h4>Liste Membres</h4>
+								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('ajouter_membres') }}">Ajouter un Membre</a>
+								<a class="nav-link" href="{{ path('ajouter_membres') }}">
+									<h4>Ajouter un Membre</h4>
+								</a>
 							</li>
 						</ul>
 					</div>
@@ -51,6 +59,9 @@
 
 		{% block body %}{% endblock %}
 
-		<footer id="piedpage">Copyright Théo Renault parce que c'est moi qu'ait fait ( et bootstrap )</footer>
+		<footer id="piedpage">
+		<h4>Copyright Théo Renault ET Kevin © 2023</h4>
+		<h5>On a pas de contact sheh</h5>
+		</footer>
 	</body>
 </html>

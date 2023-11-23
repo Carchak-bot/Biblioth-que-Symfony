@@ -11,8 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Repository\MembresRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class MembresController extends AbstractController
 {
@@ -57,6 +60,7 @@ class MembresController extends AbstractController
             return $this->redirectToRoute('home_route');
         }
 
+
         return $this->render('membres/ajout.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -65,8 +69,11 @@ class MembresController extends AbstractController
     #[Route('/membres/{id}', name: 'details_membre')]
     public function detailsMembre(Membres $membre): Response
     {
+        $livresEmpruntes = $membre->getLivres();
+    
         return $this->render('membres/details.html.twig', [
             'membre' => $membre,
+            'livresEmpruntes' => $livresEmpruntes,
         ]);
     }
 
@@ -79,5 +86,37 @@ class MembresController extends AbstractController
         $PhotoFile->move($destination, $newFilename);
 
         return $newFilename;
+    }
+    #[Route('/membres/modifier/{id}', name: 'modifier_membres')]
+    public function modifierMembres(Membres $membre, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(MembreType::class, $membre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Si le statut est différent de 'emprunté', retirez la relation avec le livre
+            if ($membre->getStatut() !== 'emprunté') {
+                foreach ($membre->getLivres() as $livre) {
+                    $livre->setIDEmprunteur(null);
+                }
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('details_membre', ['id' => $membre->getId()]);
+        }
+
+        return $this->render('membres/modifier.html.twig', [
+            'form' => $form->createView(),
+            'membre' => $membre,
+        ]);
+    }
+    #[Route('/membres/supprimer/{id}', name: 'supprimer_membres')]
+    public function supprimerMembres(Membres $membre, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($membre);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('liste_membres');
     }
 }

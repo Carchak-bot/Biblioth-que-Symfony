@@ -4,37 +4,37 @@
 {% endblock %}
 
 {% block body %}
-	<main class="bg-custom2">
-		<div class="container mt-4 mb-4">
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12 text-center">
-						<div class="bg-custom rounded p-3" style="max-width: 50%; margin: auto;">
-							<h1 class="text-white">La Bibliothèque de Kévin et Théo</h1>
-							<h4 class="text-yellow">Découvrez la culture</h4>
-						</div>
+	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+	<div class="container mt-4 mb-4">
+		<div class="container-fluid topkek">
+			<div class="row">
+				<div class="col-12 text-center">
+					<div class="bg-custom rounded p-3" style="max-width: 50%; margin: auto;">
+						<h1 class="text-grey">Bienvenue dans le hub</h1>
+						<h4 class="text-yellow">Voici la liste des livres</h4>
 					</div>
 				</div>
 			</div>
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-			<div class="row row-cols-1 row-cols-md-3">
-				{% for livre in livres %}
-					<div class="col mb-4">
-						<div class="card">
+		</div>
+		<div class="row row-cols-1 row-cols-md-3">
+			{% for livre in livres %}
+				<div class="col mb-4">
+					<div class="card bg-custom">
+						<a href="{{ path('details_livre', {'id': livre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
 							{% if livre.ImageName is not null %}
 								<img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" class="card-img-top" alt="{{ livre.titre }}" style="max-width: 100%; max-height: 100%;">
 							{% endif %}
+							<div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
 							<div class="card-body">
 								<h5 class="card-title">
-									<a href="{{ path('details_livre', {'id': livre.id}) }}">{{ livre.titre }}</a>
+									{{ livre.titre }}
 								</h5>
 								<p class="card-text">{{ livre.auteur }}</p>
 							</div>
-						</div>
+						</a>
 					</div>
-				{% endfor %}
-			</div>
+				</div>
+			{% endfor %}
 		</div>
-	</main>
+	</div>
 {% endblock %}
