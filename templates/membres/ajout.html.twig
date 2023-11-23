@@ -3,23 +3,45 @@
 {% block title %}Hello !{% endblock %}
 
 {% block body %}
-<div class="example-wrapper container p-3">
-    <h1>Salutations Employé 427 ! ✅</h1>
-    <br>
-    <h2>Veuillez vérifier ces paramètres avant créer une entrée dans la BDD :</h2>
-    <ul>
-        <li>Aucunes cases ne soient vides de données.</li>
-        <li>Le fichier de Photo soit dans ces formats : 'jpg', 'png', 'jpeg', 'gif', 'webp'</li>
-    </ul>
-    <br><br>
-    <h1>Ajouter un Membre</h1>
+    <img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+    <div class="container">
+        <h1 class="mt-4 mb-4 text-black alert alert-info text-center">Salutations Employé 427 ! ✅</h1>
+        <div class="alert alert-info">
+            <h2>Veuillez vérifier ces paramètres avant de créer une entrée dans la BDD :</h2>
+            <ul>
+                <li>Aucune case ne doit être vide de données.</li>
+                <li>Le fichier de l'image doit être dans ces formats : 'jpg', 'png', 'jpeg', 'gif', 'webp'</li>
+            </ul>
+        </div>
 
-    {{ form_start(form) }}
-    {{ form_row(form.Nom) }}
-    {{ form_row(form.Prenom) }}
-    {{ form_row(form.Statut) }}
-    {{ form_row(form.PhotoFile) }}
+        <h1 class="mt-4 mb-4 text-black alert alert-info text-center">Ajouter un Membre</h1>
 
-<button type="submit">Ajouter</button>
-    {{ form_end(form) }}
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+        
+        <div class="row alert alert-info">
+            <div class="col-md-6 mb-3 text-black text-center">
+                {{ form_row(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+            </div>
+            <div class="col-md-6 mb-3 text-black text-center">
+                {{ form_row(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+            </div>
+            <div class="col-md-6 mb-3 text-black text-center">
+                {{ form_row(form.Statut, {'attr': {'class': 'form-control', 'placeholder': 'Statut'}}) }}
+            </div>
+            <div class="col-md-6 mb-3 text-black text-center">
+                {{ form_row(form.PhotoFile, {'attr': {'class': 'form-control', 'placeholder': 'Photo'}}) }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        {{ form_end(form) }}
+
+        <br><br>
+
+        {% if form_errors(form) %}
+            <div class="alert alert-danger mt-3">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

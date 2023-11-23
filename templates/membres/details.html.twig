@@ -3,31 +3,39 @@
 {% block title %}Détails du Membre{% endblock %}
 
 {% block body %}
-    <h1>Détails du Membre</h1>
-    <ul>
-    <li>Photo : {% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">{% endif %}</li>
-        <li>Nom : {{ membre.Nom }}</li>
-        <li>Prénom : {{ membre.Prenom }}</li>
-        <li>Statut : {{ membre.Statut }}</li>       
-    </ul>
+    <div class="container mt-4 mb-4">
+        <div class="card bg-custom">
+            <div class="card-body">
+                <h1 class="card-title">Détails du Membre</h1>
+                <ul class="list-unstyled">
+                    <li>Photo : {% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">{% endif %}</li>
+                    <li>Nom : {{ membre.Nom }}</li>
+                    <li>Prénom : {{ membre.Prenom }}</li>
+                    <li>Statut : {{ membre.Statut }}</li>       
+                </ul>
 
-    <h2>Livres empruntés</h2>
-    {% if livresEmpruntes is not empty %}
-        <ul>
-            {% for livre in livresEmpruntes %}
-                <li>{{ livre.titre }}</li>
-                {# Ajoutez d'autres informations du livre si nécessaire #}
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Ce membre n'a emprunté aucun livre pour le moment.</p>
-    {% endif %}
+                <h2>Livres empruntés</h2>
+                {% if livresEmpruntes is not empty %}
+                    <ul class="list-unstyled">
+                        {% for livre in livresEmpruntes %}
+                            <li>{{ livre.titre }}</li>
+                            {# Ajoutez d'autres informations du livre si nécessaire #}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Ce membre n'a emprunté aucun livre pour le moment.</p>
+                {% endif %}
 
-    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
-        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
-    </form>
+                <div class="mt-4">
+                    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+                        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
+                    </form>
 
-    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+                    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
 
-    <a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
+                    <a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
