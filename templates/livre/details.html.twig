@@ -3,10 +3,10 @@
 {% block title %}Détails du Livre{% endblock %}
 
 {% block body %}
- {% if livre.ImageName is not null %}
-                    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
-                {% endif %}
-     <h1>{{ livre.titre }}</h1>
+    {% if livre.ImageName is not null %}
+        <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.titre }}" style="max-width: 100px; max-height: 100px;">
+    {% endif %}
+    <h1>{{ livre.titre }}</h1>
     <p>Auteur : {{ livre.auteur }}</p>
     <p>Description : {{ livre.description }}</p>
     <p>Date de Parution : {{ livre.DatedeParuption ? livre.DatedeParuption|date('d-m-Y') : 'Non spécifiée' }}</p>
@@ -14,5 +14,10 @@
     <p>Catégorie : {{ livre.categorie }}</p>
     <p>Statut : {{ livre.Statut ? 'Emprunté' : 'Disponible' }}</p>
     <p>ISBN : {{ livre.ISBNNombre }}</p>
+
+    <form method="post" action="{{ path('supprimer_livre', {'id': livre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce livre ?');">
+        <button type="submit" class="btn btn-danger">Supprimer le livre</button>
+ <a href="{{ path('home_route') }}" class="btn btn-secondary">Retour à la liste des livres</a>
+        <a href="{{ path('modifier_livre', {'id': livre.id}) }}" class="btn btn-primary">Modifier le livre</a>
 
 {% endblock %}

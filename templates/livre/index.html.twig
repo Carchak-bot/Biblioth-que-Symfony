@@ -23,4 +23,10 @@
 
     <button type="submit">Ajouter</button>
     {{ form_end(form) }}
+
+    {% if form_errors(form) %}
+    <div class="alert alert-danger">
+        {{ form_errors(form) }}
+    </div>
+    {% endif %}
 {% endblock %}

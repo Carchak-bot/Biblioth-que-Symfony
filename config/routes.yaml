@@ -9,3 +9,6 @@ kernel:
 home:
     path: /home
     controller: App\Controller\HomeController::index
+livre:
+    path: /livre/add
+    controller: App\Controller\LivreController::index

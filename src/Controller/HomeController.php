@@ -21,12 +21,4 @@ class HomeController extends AbstractController
             'livres' => $livres,
         ]);
     }
-
-    #[Route('/livre/{id}', name: 'details_livre')]
-    public function detailsLivre(EntityManagerInterface $em, Livre $livre): Response
-    {
-        return $this->render('livre/details.html.twig', [
-            'livre' => $livre,
-        ]);
-    }
 }
