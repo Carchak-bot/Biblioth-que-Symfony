@@ -92,20 +92,20 @@ class MembresController extends AbstractController
     {
         $form = $this->createForm(MembreType::class, $membre);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            // Si le statut est différent de 'emprunté', retirez la relation avec le livre
-            if ($membre->getStatut() !== 'emprunté') {
+            // Dissociez les livres du membre seulement si le champ livre est présent dans le formulaire
+            if ($form->has('livre') && $form->get('livre')->getData() !== null) {
                 foreach ($membre->getLivres() as $livre) {
                     $livre->setIDEmprunteur(null);
                 }
             }
-
+    
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('details_membre', ['id' => $membre->getId()]);
         }
-
+    
         return $this->render('membres/modifier.html.twig', [
             'form' => $form->createView(),
             'membre' => $membre,

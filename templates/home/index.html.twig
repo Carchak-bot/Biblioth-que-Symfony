@@ -19,48 +19,62 @@
 		<div class="container mt-4">
     <div class="row">
         <div class="col-md-3">
-            <select class="form-select" name="author" id="authorTri">
-                <option value="none" selected disabled hidden>-- Please choose an option --</option>
-            </select>
+  <select class="form-select" name="author" id="authorTri">
+        <option value="none" selected disabled hidden>-- Please choose an option --</option>
+        {% for livre in livres %}
+            <option value="{{ livre.auteur }}">{{ livre.auteur }}</option>
+        {% endfor %}
+    </select>
         </div>
         <div class="col-md-3">
             <select class="form-select" name="category" id="categoryTri">
                 <option value="none" selected disabled hidden>-- Please choose an option --</option>
+				    {% for livre in livres %}
+            <option value="{{ livre.categorie }}">{{ livre.categorie }}</option>
+        {% endfor %}
             </select>
         </div>
         <div class="col-md-3">
             <select class="form-select" name="date" id="dateTri">
                 <option value="none" selected disabled hidden>-- Please choose an option --</option>
+				    {% for livre in livres %}
+            <option value="{{ livre.datedeparuption }}">{{ livre.datedeparuption }}</option>
+        {% endfor %}
             </select>
         </div>
         <div class="col-md-3">
             <select class="form-select" name="titre" id="titreTri">
                 <option value="none" selected disabled hidden>-- Please choose an option --</option>
+					    {% for livre in livres %}
+            <option value="{{ livre.titre }}">{{ livre.titre }}</option>
+        {% endfor %}
             </select>
         </div>
     </div>
 </div>
 		<br><br>
 		<div class="row row-cols-1 row-cols-md-3">
-			{% for livre in livres %}
-				<div class="col mb-4">
-					<div class="card bg-custom">
-						<a href="{{ path('details_livre', {'id': livre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
-							{% if livre.ImageName is not null %}
-								<img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" class="card-img-top" alt="{{ livre.titre }}" style="width: 100%; height: 100%;">
-							{% endif %}
-							<div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
-							<div class="card-body">
-								<h5 class="card-title text-center">
-									{{ livre.titre }}
-								</h5>
-								<p class="card-text text-center">{{ livre.auteur }}</p>
-								<p class="card-text">{% if livre.statut == 1 %}🔴 Emprunté {% else %}✅ Disponible {% endif %}</p>
-							</div>
-						</a>
-					</div>
-				</div>
-			{% endfor %}
+{% for livre in livres %}
+    <div class="col mb-4 livre" data-auteur="{{ livre.auteur }}" data-categorie="{{ livre.categorie }}" data-date="{{ livre.datedeparuption }}" data-titre="{{ livre.titre }}">
+        <div class="card bg-custom">
+            <a href="{{ path('details_livre', {'id': livre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
+                {% if livre.ImageName is not null %}
+                    <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" class="card-img-top" alt="{{ livre.titre }}" style="width: 100%; height: 100%;">
+                {% endif %}
+                <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        {{ livre.titre }}
+                    </h5>
+                    <p class="card-text text-center">{{ livre.auteur }}</p>
+                    <p class="card-text">{% if livre.statut == 1 %}🔴 Emprunté {% else %}✅ Disponible {% endif %}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endfor %}
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="{{ asset('js/triLivres.js') }}"></script>
 {% endblock %}
