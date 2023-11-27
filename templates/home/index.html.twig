@@ -16,6 +16,31 @@
 				</div>
 			</div>
 		</div>
+		<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <select class="form-select" name="author" id="authorTri">
+                <option value="none" selected disabled hidden>-- Please choose an option --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="category" id="categoryTri">
+                <option value="none" selected disabled hidden>-- Please choose an option --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="date" id="dateTri">
+                <option value="none" selected disabled hidden>-- Please choose an option --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="titre" id="titreTri">
+                <option value="none" selected disabled hidden>-- Please choose an option --</option>
+            </select>
+        </div>
+    </div>
+</div>
+		<br><br>
 		<div class="row row-cols-1 row-cols-md-3">
 			{% for livre in livres %}
 				<div class="col mb-4">
@@ -26,10 +51,11 @@
 							{% endif %}
 							<div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
 							<div class="card-body">
-								<h5 class="card-title">
+								<h5 class="card-title text-center">
 									{{ livre.titre }}
 								</h5>
-								<p class="card-text">{{ livre.auteur }}</p>
+								<p class="card-text text-center">{{ livre.auteur }}</p>
+								<p class="card-text">{% if livre.statut == 1 %}🔴 Emprunté {% else %}✅ Disponible {% endif %}</p>
 							</div>
 						</a>
 					</div>

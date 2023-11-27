@@ -3,18 +3,20 @@
 {% block title %}Détails du Membre{% endblock %}
 
 {% block body %}
+    <img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+
     <div class="container mt-4 mb-4">
         <div class="card bg-custom">
             <div class="card-body">
-                <h1 class="card-title">Détails du Membre</h1>
+                <h1 class="card-title text-center">Détails du Membre</h1>
                 <ul class="list-unstyled">
-                    <li>Photo : {% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">{% endif %}</li>
+                    <li>{% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 25%; max-height: 25%;">{% endif %}</li>
                     <li>Nom : {{ membre.Nom }}</li>
                     <li>Prénom : {{ membre.Prenom }}</li>
                     <li>Statut : {{ membre.Statut }}</li>       
                 </ul>
 
-                <h2>Livres empruntés</h2>
+                <h2 class="text-center">Livres empruntés</h2>
                 {% if livresEmpruntes is not empty %}
                     <ul class="list-unstyled">
                         {% for livre in livresEmpruntes %}
@@ -23,17 +25,17 @@
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p>Ce membre n'a emprunté aucun livre pour le moment.</p>
+                    <p class="text-center">Ce membre n'a emprunté aucun livre pour le moment.</p>
                 {% endif %}
 
                 <div class="mt-4">
-                    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
-                        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
-                    </form>
-
                     <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
 
                     <a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
+                    <br><br>
+                    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+                        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
+                    </form>
                 </div>
             </div>
         </div>
