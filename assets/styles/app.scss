@@ -116,3 +116,13 @@ img.background {
     background-color: #2980b9;
     border: 1px solid #2980b9;
 }
+
+.current {
+    background-color: pink;
+    border-radius: 4px;
+    margin: 0 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+ 
+}
