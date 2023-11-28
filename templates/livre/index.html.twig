@@ -1,70 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un Livre{% endblock %}
+{% block title %}Ajouter un Livre
+{% endblock %}
 
 {% block body %}
-    <img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
-    <div class="container">
-        <h1 class="mt-4 mb-4 text-black alert alert-info text-center">Salutations Employé 427 ! ✅</h1>
-        <div class="alert alert-info">
-            <h2>Veuillez vérifier ces paramètres avant de créer une entrée dans la BDD :</h2>
-            <ul>
-                <li>Aucune case ne doit être vide de données.</li>
-                <li>Le fichier de l'image doit être dans ces formats : 'jpg', 'png', 'jpeg', 'gif', 'webp'</li>
-            </ul>
-        </div>
+	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+	<div class="container">
+		<h1 class="mt-4 mb-4 text-black alert alert-info text-center">Salutations Employé 427 ! ✅</h1>
+		<div class="alert alert-info">
+			<h2>Veuillez vérifier ces paramètres avant de créer une entrée dans la BDD :</h2>
+			<ul>
+				<li>Aucune case ne doit être vide de données.</li>
+				<li>Le fichier de l'image doit être dans ces formats : 'jpg', 'png', 'jpeg', 'gif', 'webp'</li>
+			</ul>
+		</div>
 
-        <h1 class="mt-4 mb-4 text-black alert alert-info text-center">Ajouter un Livre</h1>
+		<h1 class="mt-4 mb-4 text-black alert alert-info text-center">Ajouter un Livre</h1>
 
-        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
-        
-        <div class="row alert alert-info">
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Titre, {'attr': {'class': 'form-control', 'placeholder': 'Titre'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Auteur, {'attr': {'class': 'form-control', 'placeholder': 'Auteur'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Date_de_Paruption, {'attr': {'class': 'form-control', 'placeholder': 'Date de Parution'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.ImageFile, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Pages_Nombres, {'attr': {'class': 'form-control', 'placeholder': 'Pages'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Categorie, {'attr': {'class': 'form-control', 'placeholder': 'Catégorie'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.Statut, {'attr': {'class': 'form-check-input'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.ISBN_Nombre, {'attr': {'class': 'form-control', 'placeholder': 'ISBN'}}) }}
-            </div>
-            <div class="col-md-6 mb-3 text-black text-center">
-                {{ form_row(form.ID_Emprunteur, {'attr': {'class': 'form-control', 'placeholder': "Nom de l'emprunteur"}}) }}
-            </div>
-        </div>
+		{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-        {# Ajout de la condition pour afficher l'image si elle existe #}
-        {% if form.vars.value.ImageName is not null %}
-            <img src="{{ asset('img/CouvertureLivres/' ~ form.vars.value.ImageName) }}" alt="Image du livre" class="img-fluid mb-3">
-        {% endif %}
+		<div class="row alert alert-info">
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Titre, {'attr': {'class': 'form-control', 'placeholder': 'Titre'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Auteur, {'attr': {'class': 'form-control', 'placeholder': 'Auteur'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Date_de_Paruption, {'attr': {'class': 'form-control', 'placeholder': 'Date de Parution'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.ImageFile, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Pages_Nombres, {'attr': {'class': 'form-control', 'placeholder': 'Pages'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Categorie, {'attr': {'class': 'form-control', 'placeholder': 'Catégorie'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.Statut, {'attr': {'class': 'form-check-input'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.ISBN_Nombre, {'attr': {'class': 'form-control', 'placeholder': 'ISBN'}}) }}
+			</div>
+			<div class="col-md-6 mb-3 text-black text-center">
+				{{ form_row(form.ID_Emprunteur, {'attr': {'class': 'form-control', 'placeholder': "Nom de l'emprunteur"}}) }}
+			</div>
+		</div>
 
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-        {{ form_end(form) }}
+		{# Ajout de la condition pour afficher l'image si elle existe #}
+		{% if form.vars.value.ImageName is not null %}
+			<img src="{{ asset('img/CouvertureLivres/' ~ form.vars.value.ImageName) }}" alt="Image du livre" class="img-fluid mb-3">
+		{% endif %}
 
-        <br><br>
+		<button type="submit" class="btn btn-primary">Ajouter</button>
+		{{ form_end(form) }}
 
-        {% if form_errors(form) %}
-            <div class="alert alert-danger mt-3">
-                {{ form_errors(form) }}
-            </div>
-        {% endif %}
-    </div>
+		<br><br>
+
+		{% if form_errors(form) %}
+			<div class="alert alert-danger mt-3">
+				{{ form_errors(form) }}
+			</div>
+		{% endif %}
+	</div>
 {% endblock %}

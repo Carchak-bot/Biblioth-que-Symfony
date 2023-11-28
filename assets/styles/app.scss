@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 body {
     background-color: rgb(143, 124, 145);
 }
@@ -87,4 +89,30 @@ img.background {
 
 .text-yellow {
     color: rgb(174, 138, 62);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    margin: 0 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.page:hover {
+    background-color: #555;
+}
+
+.page:active {
+    background-color: #2980b9;
+    border: 1px solid #2980b9;
 }

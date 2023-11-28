@@ -3,26 +3,41 @@
 {% block title %}Modifier le Membre{% endblock %}
 
 {% block body %}
-    <h1>Modifier le Membre</h1>
+    <img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+    <div class="container mt-4">
+        <h1>Modifier le Membre</h1>
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-    {{ form_row(form.Nom) }}
-    {{ form_row(form.Prenom) }}
-    {{ form_row(form.Statut) }}
+        <div class="mb-3">
+            {{ form_row(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.Statut, {'attr': {'class': 'form-control', 'placeholder': 'Statut'}}) }}
+        </div>
 
-    {% if membre.PhotoName is not null %}
-        <img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;">
-    {% endif %}
+        {% if membre.PhotoName is not null %}
+            <img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 100px; max-height: 100px;" class="mb-3">
+        {% endif %}
 
-    {{ form_row(form.PhotoFile) }} 
+        <div class="mb-3">
+            {{ form_row(form.PhotoFile, {'attr': {'class': 'form-control', 'placeholder': 'Photo'}}) }}
+        </div>
 
-{% if membre.statut == 'emprunté' %}
-    {{ form_row(form.livre) }}
-{% endif %}
-    <button type="submit" class="btn btn-primary">Modifier le membre</button>
-  
-    {{ form_end(form) }}
+        {% if membre.statut == 'emprunté' %}
+            <div class="mb-3">
+                {{ form_row(form.livre, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        {% endif %}
 
-    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Modifier le membre</button>
+            <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

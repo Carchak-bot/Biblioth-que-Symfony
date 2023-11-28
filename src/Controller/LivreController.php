@@ -2,7 +2,7 @@
 
 // src/Controller/LivreController.php
 
-namespace App\Controller; 
+namespace App\Controller;
 
 use App\Form\LivreType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +25,7 @@ class LivreController extends AbstractController
         dump($livre);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             /** @var UploadedFile $ImageFile */
             $ImageFile = $form['ImageFile']->getData();
 
@@ -33,6 +33,9 @@ class LivreController extends AbstractController
                 $newImageName = $this->uploadImage($ImageFile);
                 $livre->setImageName($newImageName);
             }
+
+            $dateParutionString = $form['Date_de_Paruption']->getData();
+            $livre->setDateDeParuption($dateParutionString);
 
             $entityManager->persist($livre);
             $entityManager->flush();
@@ -62,30 +65,33 @@ class LivreController extends AbstractController
     {
         $entityManager->remove($livre);
         $entityManager->flush();
-    
+
         return $this->redirectToRoute('home_route');
     }
     #[Route('/livre/modifier/{id}', name: 'modifier_livre')]
     public function modifierLivre(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(LivreType::class, $livre);  // Utilisez LivreType ici
-    
+        
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $ImageFile = $form['ImageFile']->getData();
-    
+
             if ($ImageFile) {
                 $newImageName = $this->uploadImage($ImageFile);
                 $livre->setImageName($newImageName);
             }
-    
+
+            $dateParutionString = $form['Date_de_Paruption']->getData();
+            $livre->setDateDeParuption($dateParutionString);
+            
             $entityManager->flush();
-    
+
             return $this->redirectToRoute('details_livre', ['id' => $livre->getId()]);
         }
-    
+
         return $this->render('livre/modifier.html.twig', [
             'form' => $form->createView(),
             'livre' => $livre,
@@ -97,5 +103,7 @@ class LivreController extends AbstractController
         return $this->render('livre/details.html.twig', [
             'livre' => $livre,
         ]);
+
+
     }
 }

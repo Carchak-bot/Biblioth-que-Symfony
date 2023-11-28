@@ -5,6 +5,7 @@
 
 {% block body %}
 	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+
 	<div class="container mt-4 mb-4">
 		<div class="container-fluid topkek">
 			<div class="row">
@@ -15,28 +16,36 @@
 				</div>
 			</div>
 		</div>
-		<br>
-		<div class="row">
+		<div class="row mt-4">
 			<div class="col-md-4">
 				<select class="form-select" name="statut" id="statutTri">
 					<option value="none" selected disabled hidden>-- Please choose an option --</option>
+					{% for membre in membres %}
+						<option value="{{ membre.statut }}">{{ membre.statut }}</option>
+					{% endfor %}
 				</select>
 			</div>
 			<div class="col-md-4">
 				<select class="form-select" name="nom" id="nomTri">
 					<option value="none" selected disabled hidden>-- Please choose an option --</option>
+					{% for membre in membres %}
+						<option value="{{ membre.nom }}">{{ membre.nom }}</option>
+					{% endfor %}
 				</select>
 			</div>
 			<div class="col-md-4">
 				<select class="form-select" name="prenom" id="prenomTri">
 					<option value="none" selected disabled hidden>-- Please choose an option --</option>
+					{% for membre in membres %}
+						<option value="{{ membre.prenom }}">{{ membre.prenom }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>
 		<br><br>
-		<div class="row">
+		<div class="row row-cols-1 row-cols-md-3">
 			{% for membre in membres %}
-				<div class="col-md-4 mb-4">
+				<div class="col mb-4 membre" data-statut="{{ membre.statut }}" data-nom="{{ membre.nom }}" data-prenom="{{ membre.prenom }}">
 					<div class="card bg-custom">
 						<a href="{{ path('details_membre', {'id': membre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
 							{% if membre.PhotoName is not null %}
@@ -55,5 +64,18 @@
 				</div>
 			{% endfor %}
 		</div>
+	</div>
+	{# Afficher la liste des membres paginée #}
+	<div class="row">
+		{% for membre in membres %}
+			<div
+				class="col-md-4"><!-- Contenu de votre membre ici -->
+			</div>
+		{% endfor %}
+	</div>
+
+	{# Afficher la pagination #}
+	<div class="pagination">
+		{{ knp_pagination_render(membres) }}
 	</div>
 {% endblock %}

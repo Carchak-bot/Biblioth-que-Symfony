@@ -15,18 +15,24 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MembresRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class MembresController extends AbstractController
 {
-
     #[Route('/membres', name: 'liste_membres')]
-    public function listeMembres(MembresRepository $membresRepository): Response
+    public function listeMembres(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator): Response
     {
-        $membres = $membresRepository->findAll();
-
+        $query = $em->getRepository(Membres::class)->createQueryBuilder('m')->getQuery();
+    
+        $pagination = $paginator->paginate(
+            $query, // Requête DQL
+            $request->query->getInt('page', 1), // Numéro de la page à afficher
+            3 // Nombre d'éléments par page
+        );
+    
         return $this->render('membres/index.html.twig', [
-            'membres' => $membres,
+            'membres' => $pagination, // Utilisez le nom correct ici
         ]);
     }
 
@@ -41,10 +47,10 @@ class MembresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Appeler setPhotoFile avec le fichier photo
             $membre->setPhotoFile($form->get('PhotoFile')->getData());
-        
+
             // Assurez-vous que la propriété PhotoName est correctement définie
             $membre->setPhotoName($form->get('PhotoFile')->getData()->getClientOriginalName());
-            
+
             /** @var UploadedFile $PhotoFile */
             $PhotoFile = $form['PhotoFile']->getData();
 
@@ -56,7 +62,7 @@ class MembresController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($membre);
             $entityManager->flush();
-        
+
             return $this->redirectToRoute('home_route');
         }
 
@@ -70,7 +76,7 @@ class MembresController extends AbstractController
     public function detailsMembre(Membres $membre): Response
     {
         $livresEmpruntes = $membre->getLivres();
-    
+
         return $this->render('membres/details.html.twig', [
             'membre' => $membre,
             'livresEmpruntes' => $livresEmpruntes,
@@ -94,8 +100,8 @@ class MembresController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Si le statut est différent de 'emprunté', retirez la relation avec le livre
-            if ($membre->getStatut() !== 'emprunté') {
+            // Dissociez les livres du membre seulement si le champ livre est présent dans le formulaire
+            if ($form->has('livre') && $form->get('livre')->getData() !== null) {
                 foreach ($membre->getLivres() as $livre) {
                     $livre->setIDEmprunteur(null);
                 }

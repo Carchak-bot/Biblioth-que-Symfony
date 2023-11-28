@@ -1,28 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier les informations du livre{% endblock %}
+{% block title %}Modifier les informations du livre
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
+	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+	<div class="container mt-4">
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col-md-6">
+				<div class="mb-3">
+					{{ form_row(form.Titre, {'attr': {'class': 'form-control', 'placeholder': 'Titre'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.Auteur, {'attr': {'class': 'form-control', 'placeholder': 'Auteur'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.Description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.Date_de_Paruption, {'attr': {'class': 'form-control', 'placeholder': 'Date de Parution'}}) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				{% if livre.ImageName is not null %}
+					<img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.Titre }}" style="max-width: 100px; max-height: 100px;" class="mb-3">
+				{% endif %}
+				<div class="mb-3">
+					{{ form_row(form.ImageFile, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.Pages_Nombres, {'attr': {'class': 'form-control', 'placeholder': 'Pages'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.Categorie, {'attr': {'class': 'form-control', 'placeholder': 'Catégorie'}}) }}
+				</div>
+				<div class="mb-3 form-check">
+					{{ form_row(form.Statut, {'attr': {'class': 'form-check-input'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.ID_Emprunteur, {'attr': {'class': 'form-control', 'placeholder': "Nom de l'emprunteur"}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(form.ISBN_Nombre, {'attr': {'class': 'form-control', 'placeholder': 'ISBN'}}) }}
+				</div>
+			</div>
+		</div>
 
-    {{ form_row(form.Titre) }}
-    {{ form_row(form.Auteur) }}
-    {{ form_row(form.Description) }}
-    {{ form_row(form.Date_de_Paruption) }}
+		<div class="mb-3">
+			<a href="{{ path('details_livre', {'id': livre.id}) }}" class="btn btn-secondary">Retour aux détails</a>
+			<button type="submit" class="btn btn-primary">Modifier le livre</button>
+		</div>
 
-    {% if livre.ImageName is not null %}
-        <img src="{{ asset('img/CouvertureLivres/' ~ livre.ImageName) }}" alt="{{ livre.Titre }}" style="max-width: 100px; max-height: 100px;">
-    {% endif %}
-
-    {{ form_row(form.ImageFile) }}
-    {{ form_row(form.Pages_Nombres) }}
-    {{ form_row(form.Categorie) }}
-    {{ form_row(form.Statut) }}
-    {{ form_row(form.ID_Emprunteur) }}
-    {{ form_row(form.ISBN_Nombre) }}
-
-    <a href="{{ path('details_livre', {'id': livre.id}) }}" class="btn btn-secondary">Retour aux détails</a>
-    <button type="submit" class="btn btn-primary">Modifier le livre</button>
-
-    {{ form_end(form) }}
-
+		{{ form_end(form) }}
+	</div>
 {% endblock %}

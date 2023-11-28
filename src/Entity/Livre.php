@@ -35,9 +35,9 @@ class Livre
     private ?string $Description = null;
 
     #[
-        ORM\Column(type: "integer")
+        ORM\Column(type: "string", length: 500)
     ]
-    private ?int $Date_de_Paruption = null;
+    private ?string $Date_de_Paruption = null;
 
     #[
         ORM\Column(type: "string", length: 255, nullable: true)
@@ -124,9 +124,10 @@ class Livre
         return $this->Date_de_Paruption;
     }
 
-    public function setDateDeParuption(int $Date_de_Paruption): static
+    public function setDateDeParuption(int $timetamp): static
     {
-        $this->Date_de_Paruption = $Date_de_Paruption;
+
+        $this->Date_de_Paruption = $timetamp;
 
         return $this;
     }
