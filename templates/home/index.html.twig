@@ -75,6 +75,19 @@
 {% endfor %}
 		</div>
 	</div>
+{# Afficher la liste des livres paginée #}
+<div class="row row-cols-1 row-cols-md-3">
+    {% for livre in livres %}
+        <div class="col mb-4 livre" data-auteur="{{ livre.auteur }}" data-categorie="{{ livre.categorie }}" data-date="{{ livre.datedeparuption }}" data-titre="{{ livre.titre }}">
+            <!-- Contenu du livre ici -->
+        </div>
+    {% endfor %}
+</div>
+
+{# Afficher la pagination #}
+<div class="pagination">
+    {{ knp_pagination_render(livres) }}
+</div>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="{{ asset('js/triLivres.js') }}"></script>
 {% endblock %}

@@ -1,70 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Membres
-{% endblock %}
+{% block title %}Liste des Membres{% endblock %}
 
 {% block body %}
 	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
-	<div class="container mt-4 mb-4">
-		<div class="container-fluid topkek">
-			<div class="row">
-				<div class="col-12 text-center">
-					<div class="bg-custom rounded p-3" style="max-width: 50%; margin: auto;">
-						<h1 class="text-grey">Liste des Membres</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-4">
-				<select class="form-select" name="statut" id="statutTri">
-					<option value="none" selected disabled hidden>-- Please choose an option --</option>
-   {% for membre in membres %}
-        <option value="{{ membre.statut }}">{{ membre.statut }}</option>
-    {% endfor %}
-				</select>
-			</div>
-			<div class="col-md-4">
-				<select class="form-select" name="nom" id="nomTri">
-					<option value="none" selected disabled hidden>-- Please choose an option --</option>
-		    {% for membre in membres %}
-        <option value="{{ membre.nom }}">{{ membre.nom }}</option>
-    {% endfor %}
-				</select>
-			</div>
-			<div class="col-md-4">
-				<select class="form-select" name="prenom" id="prenomTri">
-					<option value="none" selected disabled hidden>-- Please choose an option --</option>
-		    {% for membre in membres %}
-        <option value="{{ membre.prenom }}">{{ membre.prenom }}</option>
-    {% endfor %}
-				</select>
-			</div>
-		</div>
-		<br><br>
-	<div class="row">
-    {% for membre in membres %}
-        <div class="col-md-4 mb-4">
-            <div class="card bg-custom membre" data-statut="{{ membre.statut }}" data-nom="{{ membre.nom }}" data-prenom="{{ membre.prenom }}">
-                <a href="{{ path('details_membre', {'id': membre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
-                    {% if membre.PhotoName is not null %}
-                        <img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }} {{ membre.Prenom }}" class="card-img-top" style="width: 100%; height: 100%;">
-                    {% endif %}
-                    <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{ membre.Nom }}
-                            {{ membre.Prenom }}
-                        </h5>
-                        <p class="card-text">{{ membre.Statut }}</p>
+
+    <div class="container mt-4 mb-4">
+        <div class="container-fluid topkek">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="bg-custom rounded p-3" style="max-width: 50%; margin: auto;">
+                        <h1 class="text-grey">Liste des Membres</h1>
                     </div>
-                </a>
+                </div>
             </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <select class="form-select" name="statut" id="statutTri">
+                    <option value="none" selected disabled hidden>-- Please choose an option --</option>
+                    {% for membre in membres %}
+                        <option value="{{ membre.statut }}">{{ membre.statut }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" name="nom" id="nomTri">
+                    <option value="none" selected disabled hidden>-- Please choose an option --</option>
+                    {% for membre in membres %}
+                        <option value="{{ membre.nom }}">{{ membre.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" name="prenom" id="prenomTri">
+                    <option value="none" selected disabled hidden>-- Please choose an option --</option>
+                    {% for membre in membres %}
+                        <option value="{{ membre.prenom }}">{{ membre.prenom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br><br>
+        <div class="row row-cols-1 row-cols-md-3">
+            {% for membre in membres %}
+                <div class="col mb-4 membre" data-statut="{{ membre.statut }}" data-nom="{{ membre.nom }}" data-prenom="{{ membre.prenom }}">
+                    <div class="card bg-custom">
+                        <a href="{{ path('details_membre', {'id': membre.id}) }}" class="text-decoration-none text-dark d-block position-relative">
+                            {% if membre.PhotoName is not null %}
+                                <img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }} {{ membre.Prenom }}" class="card-img-top" style="width: 100%; height: 100%;">
+                            {% endif %}
+                            <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(204, 187, 241, 0); transition: background-color 0.3s ease-in-out;"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ membre.Nom }}
+                                    {{ membre.Prenom }}
+                                </h5>
+                                <p class="card-text">{{ membre.Statut }}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+	{# Afficher la liste des membres paginée #}
+<div class="row">
+    {% for membre in membres %}
+        <div class="col-md-4">
+            <!-- Contenu de votre membre ici -->
         </div>
     {% endfor %}
 </div>
-	</div>
-		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+{# Afficher la pagination #}
+<div class="pagination">
+    {{ knp_pagination_render(membres) }}
+</div>
+
+			<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="{{ asset('js/trimembre.js') }}"></script>
 {% endblock %}

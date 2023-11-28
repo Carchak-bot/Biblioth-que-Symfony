@@ -15,20 +15,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MembresRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 class MembresController extends AbstractController
 {
-
     #[Route('/membres', name: 'liste_membres')]
-    public function listeMembres(MembresRepository $membresRepository): Response
+    public function listeMembres(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator): Response
     {
-        $membres = $membresRepository->findAll();
-
+        $query = $em->getRepository(Membres::class)->createQueryBuilder('m')->getQuery();
+    
+        $pagination = $paginator->paginate(
+            $query, // Requête DQL
+            $request->query->getInt('page', 1), // Numéro de la page à afficher
+            3 // Nombre d'éléments par page
+        );
+    
         return $this->render('membres/index.html.twig', [
-            'membres' => $membres,
+            'membres' => $pagination, // Utilisez le nom correct ici
         ]);
     }
+    
 
     #[Route('/membres/add', name: 'ajouter_membres')]
     public function ajouterMembresBdd(Request $request, ManagerRegistry $doctrine): Response

@@ -18,6 +18,7 @@ $(document).ready(function() {
     var uniqueNoms = {};
     $('.membre').each(function() {
         var nom = $(this).data('nom');
+        
         uniqueNoms[nom] = true;
     });
 
@@ -54,6 +55,7 @@ $(document).ready(function() {
 
         // Afficher uniquement les membres avec le statut sélectionné
         $('.membre[data-statut="' + selectedStatut + '"]').show();
+        
 
         // Réinitialiser les autres sélecteurs
         $('#nomTri').val('none');
