@@ -50,6 +50,7 @@
                 {{ form_row(form.ID_Emprunteur, {'attr': {'class': 'form-control', 'placeholder': "Nom de l'emprunteur"}}) }}
             </div>
         </div>
+        
 
         {# Ajout de la condition pour afficher l'image si elle existe #}
         {% if form.vars.value.ImageName is not null %}

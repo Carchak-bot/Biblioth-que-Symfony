@@ -139,3 +139,6 @@ img.background {
     font-size:  25px;
 }
 
+#resetFilter {
+    padding: 0.5rem 1rem; /* Ajustez le padding pour changer la taille */
+}
