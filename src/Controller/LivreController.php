@@ -34,8 +34,15 @@ class LivreController extends AbstractController
                 $livre->setImageName($newImageName);
             }
 
-            $dateParutionString = $form['Date_de_Paruption']->getData();
-            $livre->setDateDeParuption($dateParutionString);
+            $dateParutionTimestamp = $form['Date_de_Paruption']->getData();
+            if ($dateParutionTimestamp instanceof \DateTimeInterface) {
+                $livre->setDateDeParuption($dateParutionTimestamp->getTimestamp());
+            }
+
+            $dateEmpruntTimestamp = $form['Date_Emprunt']->getData();
+            if ($dateEmpruntTimestamp instanceof \DateTimeInterface) {
+                $livre->setDateEmprunt($dateEmpruntTimestamp->getTimestamp());
+            }
 
             $entityManager->persist($livre);
             $entityManager->flush();
@@ -72,7 +79,7 @@ class LivreController extends AbstractController
     public function modifierLivre(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(LivreType::class, $livre);  // Utilisez LivreType ici
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -84,9 +91,16 @@ class LivreController extends AbstractController
                 $livre->setImageName($newImageName);
             }
 
-            $dateParutionString = $form['Date_de_Paruption']->getData();
-            $livre->setDateDeParuption($dateParutionString);
-            
+            $dateParutionTimestamp = $form['Date_de_Paruption']->getData();
+            if ($dateParutionTimestamp instanceof \DateTimeInterface) {
+                $livre->setDateDeParuption($dateParutionTimestamp->getTimestamp());
+            }
+
+            $dateEmpruntTimestamp = $form['Date_Emprunt']->getData();
+            if ($dateEmpruntTimestamp instanceof \DateTimeInterface) {
+                $livre->setDateEmprunt($dateEmpruntTimestamp->getTimestamp());
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('details_livre', ['id' => $livre->getId()]);

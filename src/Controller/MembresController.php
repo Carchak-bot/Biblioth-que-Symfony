@@ -23,16 +23,55 @@ class MembresController extends AbstractController
     #[Route('/membres', name: 'liste_membres')]
     public function listeMembres(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator): Response
     {
-        $query = $em->getRepository(Membres::class)->createQueryBuilder('m')->getQuery();
-    
+        $query = $em->getRepository(Membres::class)->createQueryBuilder('m');
+
+        //Appliquez les filtres ici en fonction des paramètres de requête
+        if ($request->query->get('statut') && $request->query->get('statut') != 'none') {
+            $query->andWhere('m.Statut = :statut')
+                ->setParameter('statut', $request->query->get('statut'));
+        }
+        //Récupérez la liste complète des auteurs
+        $statuts = $em->getRepository(Membres::class)->createQueryBuilder('m')
+            ->select('m.Statut')
+            ->distinct(true)
+            ->getQuery()
+            ->getResult();
+
+        //Appliquez les filtres ici en fonction des paramètres de requête
+        if ($request->query->get('nom') && $request->query->get('nom') != 'none') {
+            $query->andWhere('m.Nom = :nom')
+                ->setParameter('nom', $request->query->get('nom'));
+        }
+        //Récupérez la liste complète des auteurs
+        $noms = $em->getRepository(Membres::class)->createQueryBuilder('m')
+            ->select('m.Nom')
+            ->distinct(true)
+            ->getQuery()
+            ->getResult();
+
+        //Appliquez les filtres ici en fonction des paramètres de requête
+        if ($request->query->get('prenom') && $request->query->get('prenom') != 'none') {
+            $query->andWhere('m.Prenom = :prenom')
+                ->setParameter('prenom', $request->query->get('prenom'));
+        }
+        //Récupérez la liste complète des auteurs
+        $prenoms = $em->getRepository(Membres::class)->createQueryBuilder('m')
+            ->select('m.Prenom')
+            ->distinct(true)
+            ->getQuery()
+            ->getResult();
+
         $pagination = $paginator->paginate(
             $query, // Requête DQL
             $request->query->getInt('page', 1), // Numéro de la page à afficher
             3 // Nombre d'éléments par page
         );
-    
+
         return $this->render('membres/index.html.twig', [
-            'membres' => $pagination, // Utilisez le nom correct ici
+            'membres' => $pagination,
+            'statuts' => $statuts,
+            'noms' => $noms,
+            'prenoms' => $prenoms,
         ]);
     }
 

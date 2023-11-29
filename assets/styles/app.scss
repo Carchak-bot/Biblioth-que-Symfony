@@ -91,21 +91,29 @@ img.background {
     color: rgb(174, 138, 62);
 }
 
+.membres-pagination .page {
+    text-align: center;
+    align-items: center;
+    
+}
+
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    
 }
 
 .page {
-    background-color: #3498db;
-    color: #fff;
-    border: 1px solid #3498db;
+    background-color: rgba(128, 128, 128, 0.507);
+    color: white;
+    border: 1px solid black;
     border-radius: 4px;
     margin: 0 5px;
-    padding: 8px 12px;
+    padding: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    
 }
 
 .page:hover {
@@ -113,16 +121,25 @@ img.background {
 }
 
 .page:active {
-    background-color: #2980b9;
-    border: 1px solid #2980b9;
+    background-color: rgba(128, 128, 128, 0.438);
+    border: 1px solid black;
 }
 
 .current {
-    background-color: pink;
+    background-color: rgba(255, 192, 203, 0.932);
     border-radius: 4px;
     margin: 0 5px;
     padding: 8px 12px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
- 
+    font-size: 25px;
+}
+
+.pagination a {
+    color: black;
+    font-size:  25px;
+}
+
+#resetFilter {
+    padding: 0.5rem 1rem; /* Ajustez le padding pour changer la taille */
 }

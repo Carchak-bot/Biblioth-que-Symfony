@@ -21,7 +21,7 @@
                     <ul class="list-unstyled">
                         {% for livre in livresEmpruntes %}
                             <li>{{ livre.titre }}</li>
-                            {# Ajoutez d'autres informations du livre si nécessaire #}
+                            <li>A été emprunté le {{ livre.DateEmprunt ? livre.DateEmprunt|date('Y-m-d') : 'Aucune date de mise à jour' }}</li><br>
                         {% endfor %}
                     </ul>
                 {% else %}

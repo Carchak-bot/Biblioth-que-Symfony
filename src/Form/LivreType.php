@@ -44,6 +44,15 @@ class LivreType extends AbstractType
                 ],
                 'format' => 'yyyy-MM-dd', // Format de date en anglais
             ])
+            ->add('Date_Emprunt', DateType::class, [
+                'label' => 'Date Emprunt',
+                'widget' => 'single_text',
+                'attr' => [
+                    'placeholder' => 'Date Emprunt',
+                    'class' => 'form-control',
+                ],
+                'format' => 'yyyy-MM-dd', // Format de date en anglais
+            ])
             ->add('ImageFile', FileType::class, [
                 'required' => false,
             ])
@@ -69,9 +78,12 @@ class LivreType extends AbstractType
                 'class' => Membres::class,
                 'choice_label' => 'Nom', // ou toute autre propriété que vous souhaitez afficher
                 'required' => false, // Permettre la sélection d'aucun membre
-            ])
-            // Utilisez le Data Transformer pour le champ Date_de_Paruption
-            ->get('Date_de_Paruption')
+            ]);
+
+        $builder->get('Date_de_Paruption')
+            ->addModelTransformer($this->transformer);
+
+        $builder->get('Date_Emprunt')
             ->addModelTransformer($this->transformer);
     }
 

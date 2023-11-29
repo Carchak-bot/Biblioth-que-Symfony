@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Entity;
 
@@ -38,6 +38,11 @@ class Livre
         ORM\Column(type: "string", length: 500)
     ]
     private ?string $Date_de_Paruption = null;
+
+    #[
+        ORM\Column(type: "string", length: 500, nullable: true)
+    ]
+    private ?string $Date_Emprunt = null;
 
     #[
         ORM\Column(type: "string", length: 255, nullable: true)
@@ -132,6 +137,19 @@ class Livre
         return $this;
     }
 
+    public function getDateEmprunt(): ?int
+    {
+        return $this->Date_Emprunt;
+    }
+
+    public function setDateEmprunt(int $timetamp): static
+    {
+
+        $this->Date_Emprunt = $timetamp;
+
+        return $this;
+    }
+
     public function getImageName(): ?string
     {
         return $this->ImageName;
@@ -206,7 +224,7 @@ class Livre
         return $this;
     }
 
-  
+
     public function getIDEmprunteur(): ?Membres
     {
         return $this->ID_Emprunteur;
@@ -217,5 +235,10 @@ class Livre
         $this->ID_Emprunteur = $ID_Emprunteur;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }
