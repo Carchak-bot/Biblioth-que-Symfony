@@ -5,11 +5,13 @@
 
 {% block body %}
 	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+	
 	<div class="container mt-4">
+	<h1 class="row alert alert-info">Modifier le Livre</h1>
 		{{ form_start(form) }}
 		<div class="row">
 			<div class="col-md-6 my-5">
-				<div class="mb-3">
+				<div class="mb-3 text-white">
 					{{ form_row(form.Titre, {'attr': {'class': 'form-control', 'placeholder': 'Titre'}}) }}
 				</div>
 				<div class="mb-3 text-white">
@@ -29,13 +31,13 @@
 				</div>
 			</div>
 			<div class="col-md-6 my-5">
-				<div class="mb-3">
+				<div class="mb-3 text-white">
 					{{ form_row(form.Pages_Nombres, {'attr': {'class': 'form-control', 'placeholder': 'Pages'}}) }}
 				</div>
-				<div class="mb-3">
+				<div class="mb-3 text-white">
 					{{ form_row(form.Categorie, {'attr': {'class': 'form-control', 'placeholder': 'Catégorie'}}) }}
 				</div>
-				<div class="mb-3 form-check">
+				<div class="mb-3 form-check text-white">
 					{{ form_row(form.Statut, {'attr': {'class': 'form-check-input'}}) }}
 				</div>
 				<div class="mb-3 text-white">
