@@ -40,10 +40,8 @@ class LivreController extends AbstractController
             }
 
             $dateEmpruntTimestamp = $form['Date_Emprunt']->getData();
-            if ($dateEmpruntTimestamp != null) {
-                if ($dateEmpruntTimestamp instanceof \DateTimeInterface) {
-                    $livre->setDateEmprunt($dateEmpruntTimestamp->getTimestamp());
-                }
+            if ($dateEmpruntTimestamp instanceof \DateTimeInterface) {
+                $livre->setDateEmprunt($dateEmpruntTimestamp->getTimestamp());
             } else {
                 $livre->setDateEmprunt(null);
             }

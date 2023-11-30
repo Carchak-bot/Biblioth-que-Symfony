@@ -142,10 +142,9 @@ class Livre
         return $this->Date_Emprunt;
     }
 
-    public function setDateEmprunt(int $timetamp): static
+    public function setDateEmprunt(?int $timestamp): self
     {
-
-        $this->Date_Emprunt = $timetamp;
+        $this->Date_Emprunt = $timestamp;
 
         return $this;
     }
