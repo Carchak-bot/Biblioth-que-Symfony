@@ -1,43 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Membre{% endblock %}
+{% block title %}Détails du Membre
+{% endblock %}
 
 {% block body %}
-    <img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
+	<img class="background" src="https://www.bnf.fr/sites/default/files/styles/header_big_height/public/2021-11/jardin_fm_automne.jpg" alt="Aleq">
 
-    <div class="container mt-4 mb-4">
-        <div class="card bg-custom">
-            <div class="card-body">
-                <h1 class="card-title text-center">Détails du Membre</h1>
-                <ul class="list-unstyled">
-                    <li>{% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 25%; max-height: 25%;">{% endif %}</li>
-                    <li>Nom : {{ membre.Nom }}</li>
-                    <li>Prénom : {{ membre.Prenom }}</li>
-                    <li>Statut : {{ membre.Statut }}</li>       
-                </ul>
+	<div class="container mt-4 mb-4">
+		<div class="card bg-custom">
+			<div class="card-body">
+				<h1 class="card-title text-center">Détails du Membre</h1>
+				<ul class="list-unstyled">
+					<li>
+						{% if membre.PhotoName is not null %}<img src="{{ asset('img/PhotoUtilisateurs/' ~ membre.PhotoName) }}" alt="{{ membre.Nom }}" style="max-width: 25%; max-height: 25%;">
+						{% endif %}
+					</li>
+					<li>Nom :
+						{{ membre.Nom }}</li>
+					<li>Prénom :
+						{{ membre.Prenom }}</li>
+					<li>Statut :
+						{{ membre.Statut }}</li>
+				</ul>
 
-                <h2 class="text-center">Livres empruntés</h2>
-                {% if livresEmpruntes is not empty %}
-                    <ul class="list-unstyled">
-                        {% for livre in livresEmpruntes %}
-                            <li>{{ livre.titre }}</li>
-                            <li>A été emprunté le {{ livre.DateEmprunt ? livre.DateEmprunt|date('Y-m-d') : 'Aucune date de mise à jour' }}</li><br>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-center">Ce membre n'a emprunté aucun livre pour le moment.</p>
-                {% endif %}
+				<h2 class="text-center">Livres empruntés</h2>
+				{% if livresEmpruntes is not empty %}
+					<ul class="list-unstyled">
+						{% for livre in livresEmpruntes %}
+							<li><b>{{ livre.titre }}</b></li>
+							<li>A été emprunté le
+								{{ livre.DateEmprunt ? livre.DateEmprunt|date('Y-m-d') : 'Aucune date de mise à jour' }}</li>
+							{% set date_retour = livre.DateEmprunt + 604800 %}
+							<li>Son retour est prévu pour le  :
+								{{ date_retour ? date_retour|date('Y-m-d') : 'Aucune date retour disponible'}}</li>
+							{% set interval = date(today).diff(date(date_retour)) %}
+							{% set jours_restants = interval.days %}
+							{% set en_retard = interval.invert %}
+							{# invert est 1 si la date est passée, 0 sinon #}
+							<li>
+								{% if en_retard %}
+									<p>Le livre est en retard de
+										{{ jours_restants }}
+										jours.</p>
+								{% else %}
+									<p>Il reste
+										{{ jours_restants }}
+										jours pour rendre le livre.</p>
+								{% endif %}
+							</li><br>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p class="text-center">Ce membre n'a emprunté aucun livre pour le moment.</p>
+				{% endif %}
 
-                <div class="mt-4">
-                    <a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
+				<div class="mt-4">
+					<a href="{{ path('liste_membres') }}" class="btn btn-secondary">Retour à la liste des membres</a>
 
-                    <a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
-                    <br><br>
-                    <form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
-                        <button type="submit" class="btn btn-danger">Supprimer le membre</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+					<a href="{{ path('modifier_membres', {'id': membre.id}) }}" class="btn btn-primary">Modifier le membre</a>
+					<br><br>
+					<form method="post" action="{{ path('supprimer_membres', {'id': membre.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+						<button type="submit" class="btn btn-danger">Supprimer le membre</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

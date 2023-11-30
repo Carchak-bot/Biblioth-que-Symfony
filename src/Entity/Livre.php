@@ -40,9 +40,9 @@ class Livre
     private ?string $Date_de_Paruption = null;
 
     #[
-        ORM\Column(type: "string", length: 500, nullable: true)
+        ORM\Column(type: "integer", nullable: true)
     ]
-    private ?string $Date_Emprunt = null;
+    private ?int $Date_Emprunt = null;
 
     #[
         ORM\Column(type: "string", length: 255, nullable: true)

@@ -52,6 +52,7 @@ class LivreType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'format' => 'yyyy-MM-dd', // Format de date en anglais
+                'required' => false,
             ])
             ->add('ImageFile', FileType::class, [
                 'required' => false,

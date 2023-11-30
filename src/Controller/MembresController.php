@@ -115,10 +115,11 @@ class MembresController extends AbstractController
     public function detailsMembre(Membres $membre): Response
     {
         $livresEmpruntes = $membre->getLivres();
-
+        $today = strtotime(date("Y-m-d"));
         return $this->render('membres/details.html.twig', [
             'membre' => $membre,
             'livresEmpruntes' => $livresEmpruntes,
+            'today' => $today,
         ]);
     }
 
